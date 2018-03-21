@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
-from os import environ
+import os
 
 __author__ = 'AlexGirin'
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
     DEBUG = True
-    SECRET_KEY = environ.get('SECRET_KEY') or 'MySecretKey'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'MySecretKey'
     WTF_CSRF_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
