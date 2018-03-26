@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
 __author__ = 'AlexGirin'
@@ -44,3 +44,13 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Такой email уже существует.')
+
+
+class EditProfileForm(FlaskForm):
+    username = StringField('Логин', [
+        DataRequired()
+    ])
+    about_me = TextAreaField('Обо мне', [
+        Length(min=0, max=140)
+    ])
+    submit = SubmitField('Подтвердить')
